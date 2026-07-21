@@ -13,7 +13,7 @@ use App\Http\Controllers\WorkoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 Route::get('/dashboard', DashboardController::class)
@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
-
     Route::resource('tasks', TaskController::class)
         ->except(['create', 'show', 'edit']);
 
@@ -41,13 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/tasks/{task}/duplicate', [TaskController::class, 'duplicate'])
         ->name('tasks.duplicate');
 
-
     Route::resource('diet-items', DietItemController::class)
         ->except(['create', 'show', 'edit']);
 
     Route::patch('/diet-items/{diet_item}/toggle', [DietItemController::class, 'toggle'])
         ->name('diet-items.toggle');
-
 
     Route::resource('workouts', WorkoutController::class)
         ->except(['create', 'show', 'edit']);
@@ -55,18 +52,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/workouts/{workout}/toggle', [WorkoutController::class, 'toggle'])
         ->name('workouts.toggle');
 
-
     Route::resource('habits', HabitController::class)
         ->except(['create', 'show', 'edit']);
 
     Route::patch('/habits/{habit}/toggle-completion', [HabitController::class, 'toggleCompletion'])
         ->name('habits.toggle-completion');
 
-
     Route::get('/calendar', [CalendarController::class, 'index'])
         ->name('calendar.index');
 });
-
 
 Route::middleware(['auth', 'verified', 'admin'])
     ->prefix('admin')
@@ -88,6 +82,5 @@ Route::middleware(['auth', 'verified', 'admin'])
         Route::patch('/settings', [AdminSettingController::class, 'update'])
             ->name('settings.update');
     });
-
 
 require __DIR__.'/auth.php';
